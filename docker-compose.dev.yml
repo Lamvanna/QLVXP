@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  # MongoDB for development
+  mongo:
+    image: mongo:7.0
+    container_name: nacinema_mongo_dev
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: dev123
+      MONGO_INITDB_DATABASE: nacinema_dev
+    volumes:
+      - mongo_dev_data:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - nacinema_dev_network
+
+  # Redis for development
+  redis:
+    image: redis:7-alpine
+    container_name: nacinema_redis_dev
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_dev_data:/data
+    networks:
+      - nacinema_dev_network
+
+  # Development application with hot reload
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: nacinema_app_dev
+    restart: always
+    depends_on:
+      - mongo
+      - redis
+    environment:
+      - NODE_ENV=development
+      - MONGODB_URI=mongodb://admin:dev123@mongo:27017/nacinema_dev?authSource=admin
+      - REDIS_URL=redis://redis:6379
+      - JWT_SECRET=dev-secret-key-not-for-production
+      - PORT=5000
+    ports:
+      - "5000:5000"
+      - "3000:3000"  # Vite dev server
+    volumes:
+      - .:/app
+      - /app/node_modules
+    networks:
+      - nacinema_dev_network
+    command: npm run dev
+
+volumes:
+  mongo_dev_data:
+  redis_dev_data:
+
+networks:
+  nacinema_dev_network:
+    driver: bridge

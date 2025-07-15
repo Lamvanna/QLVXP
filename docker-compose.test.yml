@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  # Test MongoDB
+  mongo_test:
+    image: mongo:7.0
+    container_name: nacinema_mongo_test
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: test
+      MONGO_INITDB_ROOT_PASSWORD: test123
+      MONGO_INITDB_DATABASE: nacinema_test
+    volumes:
+      - mongo_test_data:/data/db
+    ports:
+      - "27018:27017"
+    networks:
+      - nacinema_test_network
+
+  # Test Redis
+  redis_test:
+    image: redis:7-alpine
+    container_name: nacinema_redis_test
+    ports:
+      - "6380:6379"
+    networks:
+      - nacinema_test_network
+
+  # Test application
+  app_test:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: nacinema_app_test
+    depends_on:
+      - mongo_test
+      - redis_test
+    environment:
+      - NODE_ENV=test
+      - MONGODB_URI=mongodb://test:test123@mongo_test:27017/nacinema_test?authSource=admin
+      - REDIS_URL=redis://redis_test:6379
+      - JWT_SECRET=test-secret-key
+      - PORT=5000
+    volumes:
+      - .:/app
+      - /app/node_modules
+    networks:
+      - nacinema_test_network
+    command: npm run test
+
+volumes:
+  mongo_test_data:
+
+networks:
+  nacinema_test_network:
+    driver: bridge

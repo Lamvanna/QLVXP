@@ -1,0 +1,26 @@
+# Development Dockerfile for NaCinema
+FROM node:18-alpine
+
+# Install curl for health checks
+RUN apk add --no-cache curl
+
+# Set working directory
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+
+# Install all dependencies (including dev dependencies)
+RUN npm install
+
+# Copy source code
+COPY . .
+
+# Create uploads directory
+RUN mkdir -p uploads
+
+# Expose ports
+EXPOSE 5000 3000
+
+# Start development server
+CMD ["npm", "run", "dev"]

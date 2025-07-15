@@ -1,0 +1,242 @@
+MÔ TẢ WEBSITE QUẢN LÝ ĐẶT VÉ XEM PHIM
+1. TỔNG QUAN DỰ ÁN
+Tên dự án: Movie Ticket Booking System
+
+Kiến trúc: Web App (SPA hoặc MPA đều được)
+
+Công nghệ (nếu tương tự Na Food):
+
+Frontend: HTML, CSS, JavaScript (hoặc React, Vue, … nếu muốn nâng cao)
+
+Backend: Node.js (Express.js)
+
+Database: MongoDB
+
+Xác thực: JWT Token
+
+Triển khai: Docker
+
+2. PHÂN QUYỀN NGƯỜI DÙNG
+Vai trò	Quyền
+User (Khách đặt vé)	Xem phim, chọn suất, đặt vé, thanh toán, xem vé đã mua
+Staff (Nhân viên rạp)	Quản lý lịch chiếu, suất chiếu, duyệt hoặc hủy đặt vé
+Admin (Quản trị hệ thống)	Quản lý phim, rạp, suất chiếu, user, thống kê doanh thu
+
+3. CHỨC NĂNG NGƯỜI DÙNG
+👤 Đăng ký / Đăng nhập
+Đăng ký tài khoản
+
+Đăng nhập
+
+Quản lý thông tin cá nhân
+
+🎞 Xem danh sách phim
+Poster phim
+
+Tên phim
+
+Thể loại
+
+Độ dài
+
+Giới hạn tuổi
+
+Lịch chiếu
+
+📅 Xem chi tiết phim
+Trailer
+
+Tóm tắt nội dung
+
+Diễn viên
+
+Đánh giá (Review)
+
+Lịch chiếu chi tiết theo rạp, phòng, giờ chiếu
+
+🎟 Đặt vé xem phim
+Chọn phim
+
+Chọn suất chiếu (phòng, giờ)
+
+Chọn ghế:
+
+Hiển thị sơ đồ phòng chiếu
+
+Ghế còn trống / đã đặt
+
+Xem giá vé
+
+Thanh toán:
+
+COD tại quầy
+
+Chuyển khoản
+
+Ví điện tử (Momo, ZaloPay,…)
+
+Nhận vé điện tử (mã QR hoặc code vé)
+
+📖 Xem lịch sử đặt vé
+Danh sách vé đã mua
+
+Thông tin vé:
+
+Phim
+
+Giờ chiếu
+
+Rạp, phòng chiếu
+
+Ghế
+
+Giá vé
+
+Trạng thái vé (Đang chờ, Đã thanh toán, Đã hủy)
+
+💬 Đánh giá phim
+Để lại review:
+
+Số sao (1-5)
+
+Nội dung bình luận
+
+4. CHỨC NĂNG NHÂN VIÊN (STAFF)
+Chức năng	Mô tả
+Quản lý suất chiếu	Tạo, sửa, xóa suất chiếu
+Quản lý đặt vé	Duyệt, hủy đặt vé của khách
+Xem báo cáo	Thống kê vé bán được theo suất
+
+5. CHỨC NĂNG ADMIN
+Chức năng	Mô tả
+Quản lý phim	Thêm / sửa / xóa phim
+Quản lý rạp	Thêm / sửa / xóa thông tin rạp, phòng chiếu
+Quản lý suất chiếu	Sắp lịch chiếu cho từng phòng
+Quản lý user	Danh sách user, khóa tài khoản, phân quyền
+Quản lý review	Duyệt, ẩn hoặc xóa review
+Thống kê doanh thu	Doanh thu theo phim, theo rạp, theo ngày/tháng
+
+6. DỮ LIỆU CHÍNH (Model)
+Phim (Movie)
+
+Tên
+
+Mô tả
+
+Thể loại
+
+Thời lượng
+
+Giới hạn tuổi
+
+Hình ảnh
+
+Trailer
+
+Rạp (Cinema)
+
+Tên rạp
+
+Địa chỉ
+
+Phòng chiếu
+
+Phòng chiếu (Room)
+
+Tên phòng
+
+Sơ đồ ghế
+
+Sức chứa
+
+Suất chiếu (Showtime)
+
+Phim
+
+Phòng
+
+Ngày giờ
+
+Giá vé
+
+Vé (Ticket)
+
+Người đặt
+
+Suất chiếu
+
+Ghế
+
+Giá vé
+
+Trạng thái (Chờ, Đã thanh toán, Đã hủy)
+
+User
+
+Thông tin cá nhân
+
+Role (User, Staff, Admin)
+
+Review
+
+User
+
+Phim
+
+Số sao
+
+Nội dung
+
+7. CẤU TRÚC THƯ MỤC (BACKEND ĐƠN GIẢN)
+pgsql
+Copy
+Edit
+backend/
+├── models/
+│   ├── Movie.js
+│   ├── Cinema.js
+│   ├── Room.js
+│   ├── Showtime.js
+│   ├── Ticket.js
+│   ├── User.js
+│   └── Review.js
+├── controllers/
+├── routes/
+├── middlewares/
+├── utils/
+├── server.js
+├── .env
+└── package.json
+8. API ĐƠN GIẢN
+Method	Endpoint	Chức năng
+POST	/auth/register	Đăng ký
+POST	/auth/login	Đăng nhập
+GET	/movies	Lấy danh sách phim
+GET	/movies/:id	Lấy chi tiết phim
+GET	/showtimes/:movieId	Lịch chiếu phim
+POST	/tickets	Đặt vé
+GET	/tickets/me	Xem vé đã đặt
+PUT	/tickets/:id/cancel	Hủy vé
+POST	/reviews	Đánh giá phim
+GET	/admin/movies	Quản lý phim (Admin)
+POST	/admin/showtimes	Tạo suất chiếu (Admin/Staff)
+
+9. TRIỂN KHAI BẰNG DOCKER
+docker-compose.yml
+yaml
+Copy
+Edit
+version: "3.8"
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "5000:5000"
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/moviedb
+    depends_on:
+      - mongo
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
