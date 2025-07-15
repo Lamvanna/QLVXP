@@ -1,12 +1,19 @@
-# NaCinema - Hệ Thống Đặt Vé Phim
+# 🎬 NaCinema - Hệ Thống Quản Lý Vé Xem Phim
 
-## Giới thiệu
+[![GitHub](https://img.shields.io/badge/GitHub-Repository-blue)](https://github.com/Lamvanna/QLVXP)
+[![Node.js](https://img.shields.io/badge/Node.js-18+-green)](https://nodejs.org/)
+[![React](https://img.shields.io/badge/React-18-blue)](https://reactjs.org/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-Database-green)](https://mongodb.com/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-Language-blue)](https://typescriptlang.org/)
 
-NaCinema là hệ thống đặt vé phim toàn diện được xây dựng với React, Node.js, Express và MongoDB. Hệ thống cung cấp đầy đủ các tính năng từ duyệt phim, đặt vé, quản lý rạp chiếu đến bảng điều khiển admin.
+## 📖 Giới thiệu
+
+**NaCinema** là hệ thống quản lý vé xem phim toàn diện được xây dựng với công nghệ hiện đại. Hệ thống cung cấp đầy đủ các tính năng từ duyệt phim, đặt vé, quản lý rạp chiếu đến bảng điều khiển admin với giao diện thân thiện và trải nghiệm người dùng tuyệt vời.
 
 ## Công nghệ sử dụng
 
 ### Frontend
+
 - **React 18** với TypeScript
 - **Vite** - Build tool và dev server
 - **Tailwind CSS** - Styling
@@ -16,6 +23,7 @@ NaCinema là hệ thống đặt vé phim toàn diện được xây dựng vớ
 - **Wouter** - Routing
 
 ### Backend
+
 - **Node.js** với Express
 - **TypeScript** - Type safety
 - **MongoDB** - Database
@@ -51,6 +59,7 @@ npm run dev
 ### Cách 2: Sử dụng Docker
 
 #### Quick Start
+
 ```bash
 # Clone dự án
 git clone <repository-url>
@@ -64,6 +73,7 @@ cd nacinema
 ```
 
 #### Development với Docker
+
 ```bash
 # Chạy development environment
 docker-compose -f docker-compose.dev.yml up --build
@@ -76,6 +86,7 @@ docker-compose down
 ```
 
 #### Production với Docker
+
 ```bash
 # Chạy production environment
 docker-compose up --build -d
@@ -90,23 +101,28 @@ docker-compose logs -f
 ### Cách 2: Chạy Local (Traditional)
 
 #### 1. Clone dự án
+
 ```bash
 git clone <repository-url>
 cd nacinema
 ```
 
 #### 2. Cài đặt dependencies
+
 ```bash
 npm install
 ```
 
 #### 3. Cấu hình môi trường
+
 Tạo file `.env` từ template:
+
 ```bash
 cp .env.example .env
 ```
 
 Cập nhật thông tin trong `.env`:
+
 ```env
 # MongoDB Connection
 MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/nacinema?retryWrites=true&w=majority
@@ -116,6 +132,7 @@ JWT_SECRET=your-super-secret-jwt-key-here
 ```
 
 #### 4. Chạy dự án
+
 ```bash
 # Development server
 npm run dev
@@ -152,11 +169,13 @@ movie-ticket-booking/
 ## Tài khoản mặc định
 
 ### Admin Account
+
 - **Email:** admin@nacinema.com
 - **Password:** admin123
 - **Role:** Admin (toàn quyền)
 
 ### Staff Account
+
 - **Email:** staff@nacinema.com
 - **Password:** staff123
 - **Role:** Staff (quản lý suất chiếu, vé)
@@ -164,6 +183,7 @@ movie-ticket-booking/
 ## Tính năng chính
 
 ### 🎬 Cho người dùng
+
 - Duyệt danh sách phim
 - Xem thông tin chi tiết phim
 - Chọn suất chiếu và ghế
@@ -173,11 +193,13 @@ movie-ticket-booking/
 - Đánh giá và review phim
 
 ### 🎭 Cho nhân viên (Staff)
+
 - Quản lý suất chiếu
 - Phê duyệt/hủy vé
 - Xem thống kê cơ bản
 
 ### 👑 Cho admin
+
 - Quản lý phim (CRUD)
 - Quản lý rạp chiếu và phòng
 - Quản lý suất chiếu
@@ -255,6 +277,7 @@ Tạo file `.vscode/launch.json` để debug:
 ## Scripts có sẵn
 
 ### NPM Scripts
+
 ```bash
 # Chạy development server (frontend + backend)
 npm run dev
@@ -273,6 +296,7 @@ npm run db:push
 ```
 
 ### Docker Scripts
+
 ```bash
 # Development
 ./docker-scripts.sh dev        # Start development environment
@@ -306,6 +330,7 @@ npm run db:push
 ### Data seeding
 
 Dữ liệu mẫu sẽ được tự động tạo khi chạy lần đầu:
+
 - 3 phim mẫu
 - 4 rạp chiếu
 - 6 phòng chiếu
@@ -317,14 +342,17 @@ Dữ liệu mẫu sẽ được tự động tạo khi chạy lần đầu:
 ### Lỗi thường gặp
 
 1. **MongoDB connection failed**
+
    - Kiểm tra MONGODB_URI trong .env
    - Đảm bảo IP được whitelist trong MongoDB Atlas
 
 2. **Port 5000 đã được sử dụng**
+
    - Thay đổi port trong server/index.ts
    - Hoặc kill process đang sử dụng port 5000
 
 3. **JWT token errors**
+
    - Xóa localStorage trong browser
    - Đảm bảo JWT_SECRET được cấu hình
 
@@ -344,12 +372,14 @@ Dữ liệu mẫu sẽ được tự động tạo khi chạy lần đầu:
 ### Docker Deployment (Khuyến nghị)
 
 #### Development
+
 ```bash
 # Sử dụng Docker Compose cho development
 docker-compose -f docker-compose.dev.yml up --build
 ```
 
 #### Production
+
 ```bash
 # Sử dụng Docker Compose cho production
 docker-compose up --build -d
@@ -359,6 +389,7 @@ docker-compose -f docker-compose.yml up -d
 ```
 
 #### Environment Variables for Production
+
 ```env
 NODE_ENV=production
 MONGODB_URI=mongodb://admin:strong_password@mongo:27017/nacinema?authSource=admin
@@ -368,6 +399,7 @@ PORT=5000
 ```
 
 ### Traditional Deployment
+
 ```bash
 # Build production
 npm run build
@@ -378,6 +410,7 @@ pm2 start dist/index.js --name nacinema
 ```
 
 ### Docker Features
+
 - **Multi-stage builds** cho optimization
 - **Health checks** cho reliability
 - **Nginx reverse proxy** cho load balancing
