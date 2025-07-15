@@ -4,6 +4,35 @@
 
 NaCinema Frontend được xây dựng với **React 18**, **TypeScript**, **Tailwind CSS** và **shadcn/ui** components, sử dụng **Vite** làm build tool và **React Query** cho state management.
 
+### 🏗️ Kiến trúc tổng thể
+
+```
+Frontend Architecture
+├── 🎨 Presentation Layer (React Components)
+│   ├── Pages (Route Components)
+│   ├── Components (Reusable UI)
+│   └── UI Library (shadcn/ui)
+├── 🔄 State Management Layer
+│   ├── Server State (React Query)
+│   ├── Client State (useState, useReducer)
+│   └── Form State (React Hook Form)
+├── 🌐 Data Layer
+│   ├── API Client (Fetch/Axios)
+│   ├── Authentication (JWT)
+│   └── Local Storage
+└── 🎛️ Configuration Layer
+    ├── Routing (Wouter)
+    ├── Styling (Tailwind CSS)
+    └── Build (Vite)
+```
+
+### 🎨 Design System
+
+- **Color Palette**: Cinema-themed với dark/light mode
+- **Typography**: Inter font family với responsive sizes
+- **Spacing**: Consistent spacing scale (4px base)
+- **Components**: Accessible, reusable, customizable
+
 ---
 
 ## 📱 Main Application Structure
@@ -43,29 +72,95 @@ const routes = {
 
 ### 🧭 Navigation Component (`Navigation.tsx`)
 
-**Tác dụng**: Thanh điều hướng chính của ứng dụng
+**Tác dụng**: Thanh điều hướng chính của ứng dụng với responsive design và role-based access
 
-**Features**:
+#### 🎨 Visual Structure
 
-- Responsive design (mobile/desktop)
-- User authentication state
-- Role-based menu items
-- Dark/Light mode toggle
+```
+Desktop Navigation:
+[Logo] [Home] [Movies] [Cinemas] [Promotions] ... [User Menu] [Theme Toggle]
 
-**Props Interface**:
+Mobile Navigation:
+[Logo] [Hamburger Menu]
+└── Dropdown: [All Menu Items]
+```
+
+#### 🔧 Props Interface
 
 ```typescript
 interface NavigationProps {
   user?: User | null;
   onLogout: () => void;
+  className?: string;
+}
+
+interface User {
+  id: string;
+  username: string;
+  email: string;
+  role: "user" | "staff" | "admin";
+  fullName?: string;
 }
 ```
 
-**Key Functions**:
+#### 🎯 Key Features
 
-- `handleLogin()`: Xử lý đăng nhập
-- `handleLogout()`: Xử lý đăng xuất
-- `toggleMobileMenu()`: Toggle mobile menu
+**1. Responsive Design**
+
+```typescript
+// Mobile menu state
+const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+// Responsive breakpoints
+const isMobile = useMediaQuery("(max-width: 768px)");
+```
+
+**2. Role-based Menu Items**
+
+```typescript
+const getMenuItems = (user: User | null) => {
+  const baseItems = [
+    { href: "/", label: "Trang chủ", icon: Home },
+    { href: "/movies", label: "Phim", icon: Film },
+    { href: "/cinemas", label: "Rạp chiếu", icon: Building },
+    { href: "/promotions", label: "Khuyến mãi", icon: Gift },
+  ];
+
+  if (!user) return baseItems;
+
+  const userItems = [
+    ...baseItems,
+    { href: "/tickets", label: "Vé của tôi", icon: Ticket },
+  ];
+
+  if (user.role === "staff" || user.role === "admin") {
+    userItems.push({ href: "/staff", label: "Quản lý", icon: Settings });
+  }
+
+  if (user.role === "admin") {
+    userItems.push({ href: "/admin", label: "Admin", icon: Shield });
+  }
+
+  return userItems;
+};
+```
+
+**3. Authentication State Management**
+
+```typescript
+const { user, logout } = useAuth();
+const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+
+const handleLogout = async () => {
+  try {
+    await logout();
+    toast.success("Đăng xuất thành công");
+    navigate("/");
+  } catch (error) {
+    toast.error("Lỗi đăng xuất");
+  }
+};
+```
 
 ---
 
@@ -73,24 +168,144 @@ interface NavigationProps {
 
 #### `MovieCard.tsx`
 
-**Tác dụng**: Hiển thị thông tin phim dạng card
+**Tác dụng**: Hiển thị thông tin phim dạng card với interactive elements
 
-**Props**:
+##### 🎨 Visual Structure
+
+```
+┌─────────────────────────┐
+│                         │
+│      [Poster Image]     │
+│                         │
+│  [Status Badge (if any)]│
+├─────────────────────────┤
+│ Title                   │
+│ Rating ★★★★☆ | Genre    │
+│ Duration: 120 min       │
+│                         │
+│ [Booking Button]        │
+└─────────────────────────┘
+```
+
+##### 🔧 Props Interface
 
 ```typescript
 interface MovieCardProps {
   movie: Movie;
   onBooking?: (movieId: string) => void;
   showStatus?: boolean;
+  variant?: "default" | "compact" | "featured";
+  className?: string;
+}
+
+interface Movie {
+  id: string;
+  title: string;
+  description: string;
+  genre: string;
+  duration: number; // minutes
+  rating: string; // PG, PG-13, R
+  poster: string; // URL
+  status: "active" | "coming-soon" | "inactive";
+  releaseDate: string;
 }
 ```
 
-**Features**:
+##### 🎯 Key Features
 
-- Poster image với lazy loading
-- Movie rating và genre
-- Quick booking button
-- Status indicators (coming soon, active)
+**1. Responsive Image Handling**
+
+```typescript
+const PosterImage = () => {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [error, setError] = useState(false);
+
+  return (
+    <div className="relative aspect-[2/3] overflow-hidden rounded-t-md">
+      {!isLoaded && !error && (
+        <div className="absolute inset-0 flex items-center justify-center bg-muted">
+          <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+        </div>
+      )}
+
+      {error && (
+        <div className="absolute inset-0 flex items-center justify-center bg-muted">
+          <ImageOff className="h-8 w-8 text-muted-foreground" />
+        </div>
+      )}
+
+      <Image
+        src={movie.poster}
+        alt={movie.title}
+        fill
+        className={cn(
+          "object-cover transition-opacity duration-300",
+          isLoaded ? "opacity-100" : "opacity-0"
+        )}
+        onLoad={() => setIsLoaded(true)}
+        onError={() => setError(true)}
+        loading="lazy"
+      />
+    </div>
+  );
+};
+```
+
+**2. Status Indicators**
+
+```typescript
+const StatusBadge = () => {
+  if (!showStatus) return null;
+
+  const statusConfig = {
+    active: { label: "Đang chiếu", variant: "default" as const, icon: Play },
+    "coming-soon": {
+      label: "Sắp chiếu",
+      variant: "secondary" as const,
+      icon: Clock,
+    },
+    inactive: {
+      label: "Ngừng chiếu",
+      variant: "outline" as const,
+      icon: XCircle,
+    },
+  };
+
+  const config = statusConfig[movie.status];
+
+  return (
+    <Badge variant={config.variant} className="absolute top-2 right-2 z-10">
+      <config.icon className="mr-1 h-3 w-3" />
+      {config.label}
+    </Badge>
+  );
+};
+```
+
+**3. Interactive Elements**
+
+```typescript
+const handleBooking = () => {
+  if (onBooking) {
+    onBooking(movie.id);
+  } else {
+    navigate(`/movies/${movie.id}`);
+  }
+};
+
+// Render booking button
+const BookingButton = () => (
+  <Button
+    variant="default"
+    size="sm"
+    className="w-full mt-2"
+    onClick={handleBooking}
+    disabled={movie.status !== "active"}
+  >
+    {movie.status === "active" ? "Đặt vé" : "Chi tiết"}
+  </Button>
+);
+```
 
 #### `MovieDetail.tsx` (Page)
 

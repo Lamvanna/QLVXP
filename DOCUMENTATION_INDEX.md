@@ -8,26 +8,30 @@
 
 ### 📁 Tài liệu cấu trúc dự án
 
-| Tài liệu | Mô tả |
-|----------|-------|
-| [PROJECT_STRUCTURE.md](./PROJECT_STRUCTURE.md) | Cấu trúc thư mục và file của dự án |
-| [API_DATABASE_GUIDE.md](./API_DATABASE_GUIDE.md) | Chi tiết về API và Database Schema |
-| [FRONTEND_COMPONENTS_GUIDE.md](./FRONTEND_COMPONENTS_GUIDE.md) | Hướng dẫn về Frontend Components |
-| [DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md) | Hướng dẫn triển khai ứng dụng |
+| Tài liệu                                                         | Mô tả                                        |
+| ---------------------------------------------------------------- | -------------------------------------------- |
+| [PROJECT_STRUCTURE.md](./PROJECT_STRUCTURE.md)                   | Cấu trúc thư mục và file của dự án           |
+| [API_DATABASE_GUIDE.md](./API_DATABASE_GUIDE.md)                 | Chi tiết về API và Database Schema           |
+| [FRONTEND_COMPONENTS_GUIDE.md](./FRONTEND_COMPONENTS_GUIDE.md)   | Hướng dẫn về Frontend Components             |
+| [DETAILED_COMPONENTS_GUIDE.md](./DETAILED_COMPONENTS_GUIDE.md)   | Chi tiết sâu về Components và Implementation |
+| [BUSINESS_LOGIC_GUIDE.md](./BUSINESS_LOGIC_GUIDE.md)             | Business Logic, Workflows và Rules           |
+| [SECURITY_PERFORMANCE_GUIDE.md](./SECURITY_PERFORMANCE_GUIDE.md) | Bảo mật và Tối ưu hiệu suất                  |
+| [DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md)                     | Hướng dẫn triển khai ứng dụng                |
 
 ### 📁 Tài liệu hướng dẫn sử dụng
 
-| Tài liệu | Mô tả |
-|----------|-------|
-| [README.md](./README.md) | Tổng quan dự án và hướng dẫn cài đặt |
-| [MANUAL_RUN_GUIDE.md](./MANUAL_RUN_GUIDE.md) | Hướng dẫn chạy thủ công |
-| [SETUP_GUIDE.md](./SETUP_GUIDE.md) | Hướng dẫn cài đặt môi trường |
-| [DOCKER_GUIDE.md](./DOCKER_GUIDE.md) | Hướng dẫn sử dụng Docker |
-| [SCRIPTS_README.md](./SCRIPTS_README.md) | Hướng dẫn sử dụng scripts |
+| Tài liệu                                     | Mô tả                                |
+| -------------------------------------------- | ------------------------------------ |
+| [README.md](./README.md)                     | Tổng quan dự án và hướng dẫn cài đặt |
+| [MANUAL_RUN_GUIDE.md](./MANUAL_RUN_GUIDE.md) | Hướng dẫn chạy thủ công              |
+| [SETUP_GUIDE.md](./SETUP_GUIDE.md)           | Hướng dẫn cài đặt môi trường         |
+| [DOCKER_GUIDE.md](./DOCKER_GUIDE.md)         | Hướng dẫn sử dụng Docker             |
+| [SCRIPTS_README.md](./SCRIPTS_README.md)     | Hướng dẫn sử dụng scripts            |
 
 ## 🚀 Bắt đầu nhanh
 
 ### 1. Cài đặt
+
 ```bash
 # Clone repository
 git clone https://github.com/Lamvanna/QLVXP.git
@@ -38,6 +42,7 @@ npm install
 ```
 
 ### 2. Cấu hình môi trường
+
 ```bash
 # Tạo file .env
 cp .env.example .env
@@ -45,6 +50,7 @@ cp .env.example .env
 ```
 
 ### 3. Chạy ứng dụng
+
 ```bash
 # Windows
 ./start-dev.bat
@@ -56,6 +62,7 @@ npm run dev
 ## 🔍 Tổng quan kiến trúc
 
 ### Frontend (React)
+
 - **Framework**: React 18 với TypeScript
 - **UI Library**: Radix UI components với shadcn/ui
 - **Styling**: Tailwind CSS
@@ -63,6 +70,7 @@ npm run dev
 - **Routing**: Wouter
 
 ### Backend (Node.js)
+
 - **Framework**: Express.js
 - **Database**: MongoDB
 - **Authentication**: JWT
@@ -71,23 +79,27 @@ npm run dev
 ## 💻 Chức năng chính
 
 ### 🎬 Quản lý phim
+
 - Danh sách phim đang chiếu/sắp chiếu
 - Chi tiết phim với trailer, rating
 - Đánh giá và bình luận
 
 ### 🎫 Đặt vé
+
 - Chọn suất chiếu
 - Chọn ghế ngồi tương tác
 - Áp dụng mã khuyến mãi
 - Thanh toán đa phương thức
 
 ### 👑 Quản trị viên
+
 - Quản lý phim, rạp, phòng chiếu
 - Quản lý suất chiếu
 - Quản lý người dùng
 - Thống kê và báo cáo
 
 ### 👨‍💼 Nhân viên
+
 - Quản lý suất chiếu
 - Duyệt đặt vé
 - Hỗ trợ khách hàng
@@ -114,18 +126,19 @@ MovieNA/
 
 ## 🔌 API Endpoints
 
-| Endpoint | Method | Mô tả |
-|----------|--------|-------|
-| `/api/movies` | GET | Danh sách phim |
-| `/api/movies/:id` | GET | Chi tiết phim |
-| `/api/showtimes` | GET | Danh sách suất chiếu |
-| `/api/bookings` | POST | Đặt vé |
-| `/api/auth/login` | POST | Đăng nhập |
-| `/api/auth/register` | POST | Đăng ký |
+| Endpoint             | Method | Mô tả                |
+| -------------------- | ------ | -------------------- |
+| `/api/movies`        | GET    | Danh sách phim       |
+| `/api/movies/:id`    | GET    | Chi tiết phim        |
+| `/api/showtimes`     | GET    | Danh sách suất chiếu |
+| `/api/bookings`      | POST   | Đặt vé               |
+| `/api/auth/login`    | POST   | Đăng nhập            |
+| `/api/auth/register` | POST   | Đăng ký              |
 
 ## 📊 Database Schema
 
 ### Collections
+
 - **Movies**: Thông tin phim
 - **Users**: Người dùng và authentication
 - **Cinemas**: Rạp chiếu phim
@@ -137,27 +150,30 @@ MovieNA/
 
 ## 🛠️ Scripts hỗ trợ
 
-| Script | Mô tả |
-|--------|-------|
-| `start-dev.bat` | Khởi chạy development server |
-| `stop-dev.bat` | Dừng development server |
-| `kill-port.bat` | Xử lý port conflicts |
-| `upload-to-github.bat` | Upload code lên GitHub |
+| Script                 | Mô tả                        |
+| ---------------------- | ---------------------------- |
+| `start-dev.bat`        | Khởi chạy development server |
+| `stop-dev.bat`         | Dừng development server      |
+| `kill-port.bat`        | Xử lý port conflicts         |
+| `upload-to-github.bat` | Upload code lên GitHub       |
 
 ## 🚀 Deployment
 
 ### Development
+
 ```bash
 npm run dev
 ```
 
 ### Production
+
 ```bash
 npm run build
 npm run start
 ```
 
 ### Docker
+
 ```bash
 docker-compose up -d
 ```
@@ -165,6 +181,7 @@ docker-compose up -d
 ## 🔧 Troubleshooting
 
 ### Port conflicts
+
 ```bash
 # Windows
 ./kill-port.bat
@@ -175,9 +192,38 @@ kill -9 <PID>
 ```
 
 ### MongoDB connection issues
+
 - Kiểm tra MongoDB service đang chạy
 - Xác nhận connection string trong `.env`
 - Kiểm tra firewall/network settings
+
+## 📖 Cách sử dụng tài liệu:
+
+### 🚀 Cho Developer mới
+
+1. **Bắt đầu với**: [DOCUMENTATION_INDEX.md](./DOCUMENTATION_INDEX.md) - Tổng quan toàn bộ dự án
+2. **Hiểu cấu trúc**: [PROJECT_STRUCTURE.md](./PROJECT_STRUCTURE.md) - Cấu trúc files và folders
+3. **Setup môi trường**: [MANUAL_RUN_GUIDE.md](./MANUAL_RUN_GUIDE.md) - Hướng dẫn chạy local
+
+### 🎨 Cho Frontend Developer
+
+1. **Components tổng quan**: [FRONTEND_COMPONENTS_GUIDE.md](./FRONTEND_COMPONENTS_GUIDE.md)
+2. **Chi tiết implementation**: [DETAILED_COMPONENTS_GUIDE.md](./DETAILED_COMPONENTS_GUIDE.md)
+3. **UI/UX patterns**: Seat selection, booking flow, responsive design
+
+### 🔧 Cho Backend Developer
+
+1. **API & Database**: [API_DATABASE_GUIDE.md](./API_DATABASE_GUIDE.md)
+2. **Business Logic**: [BUSINESS_LOGIC_GUIDE.md](./BUSINESS_LOGIC_GUIDE.md)
+3. **Security & Performance**: [SECURITY_PERFORMANCE_GUIDE.md](./SECURITY_PERFORMANCE_GUIDE.md)
+
+### 🚀 Cho DevOps/Deployment
+
+1. **Deployment Guide**: [DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md)
+2. **Docker setup**: docker-compose files và configurations
+3. **Production considerations**: Security, monitoring, scaling
+
+---
 
 ## 🔗 Links hữu ích
 
